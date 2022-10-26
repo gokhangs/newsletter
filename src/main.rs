@@ -1,7 +1,7 @@
 use std::net::TcpListener;
 
 use actix_web;
-use zero2prod::run;
+use zero2prod::startup;
 
 #[actix_web::main]
 pub async fn main() -> std::io::Result<()> {
@@ -9,5 +9,5 @@ pub async fn main() -> std::io::Result<()> {
     // We retrieve the port assigned to us by the OS
     let port = listener.local_addr().unwrap().port();
     println!("{}", port);
-    run(listener)?.await
+    startup::run(listener)?.await
 }
