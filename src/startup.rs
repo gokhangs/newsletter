@@ -1,7 +1,7 @@
 use super::routes;
 use actix_web::{
     dev::Server,
-    middleware::Logger,
+    //middleware::Logger,
     web::{self},
     App, HttpServer,
 };

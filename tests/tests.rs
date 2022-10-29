@@ -3,7 +3,6 @@ use actix_web::web::Data;
 use once_cell::sync::Lazy;
 use reqwest;
 use secrecy::ExposeSecret;
-use secrecy::ExposeSecret;
 use sqlx::Executor;
 use sqlx::{Connection, PgConnection, PgPool};
 use std::net::TcpListener;
