@@ -3,7 +3,7 @@ use std::net::TcpListener;
 //use env_logger::Env;
 use actix_web;
 use secrecy::ExposeSecret;
-use sqlx::PgPool;
+use sqlx::{PgPool, postgres::PgPoolOptions};
 use zero2prod::{configuration, startup, telemetry};
 
 #[actix_web::main]
@@ -19,7 +19,10 @@ pub async fn main() -> std::io::Result<()> {
     let listener = TcpListener::bind(address).expect("Failed to bind random port");
 
     //println!("{}", listener.local_addr().unwrap().port());
-    let pool = PgPool::connect_lazy(&configuration.database.connection_string().expose_secret())
+    let pool = PgPoolOptions::new()
+        .acquire_timeout(std::time::Duration::from_secs(2))
+        .connect_lazy(&configuration.database.connection_string()
+        .expose_secret())
         .expect("Couldn't connect to the DB");
     startup::run(listener, pool)?.await
 }
