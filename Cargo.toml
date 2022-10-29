@@ -18,7 +18,7 @@ reqwest = "0.11.12"
 serde = { version = "1.0.147", features = ["derive"]}
 config = "0.13"
 uuid = { version = "1.2.1", features = ["v4"]}
-chrono = "0.4.22"
+chrono = { version = "0.4.22", default-features = false }
 env_logger = "0.9.1"
 log = "0.4"
 tracing = { version = "0.1.37", features = ["log"]}

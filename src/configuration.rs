@@ -52,12 +52,8 @@ impl DatabaseSettings {
 }
 
 pub fn get_configuration() -> Result<Settings, config::ConfigError> {
-    //let mut settings = config::Config::default();
     let base_path = std::env::current_dir().expect("Couldn't determine the current directory");
     let configuration_directory = base_path.join("configuration");
-
-    //settings.merge(config::File::from(configuration_directory.join("base")).required(true))?;
-    //let sett = ConfigBuilder{};
 
     //default to "local" if unspecified
     let environment: Environment = std::env::var("APP_ENVIRONMENT")
