@@ -46,8 +46,9 @@ impl DatabaseSettings {
     }
 
     pub fn with_db(&self) -> PgConnectOptions {
-        let options = self.without_db().database(&self.database_name);
+        let mut options = self.without_db().database(&self.database_name);
         options.log_statements(tracing::log::LevelFilter::Trace);
+        options
     }
 
     // pub fn connection_string_without_db(&self) -> Secret<String> {
