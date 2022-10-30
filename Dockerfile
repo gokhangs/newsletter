@@ -9,6 +9,7 @@ RUN apt update && apt install lld clang -y
 #STEP 2 Caches our dependencies and builds our binary. 
 #As long as our dependencies do not change the recipe.json file will stay the same.
 #So, the outcome of "cargo chef cook --release --recipe-path recipe.json" will be cached, massively speeding up builds
+# "COPY . . "  will invalidate the cache for the planner, but not builder as long as the checksum of recipe.json does not change. 
 FROM chef as planner
 COPY . .
 # Compute a lock-like file for our project 

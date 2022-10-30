@@ -21,8 +21,7 @@ pub async fn main() -> std::io::Result<()> {
     //println!("{}", listener.local_addr().unwrap().port());
     let pool = PgPoolOptions::new()
         .acquire_timeout(std::time::Duration::from_secs(2))
-        .connect_lazy(&configuration.database.connection_string()
-        .expose_secret())
-        .expect("Couldn't connect to the DB");
+        .connect_lazy_with(configuration.database.with_db());
+
     startup::run(listener, pool)?.await
 }
