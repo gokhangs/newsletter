@@ -1,10 +1,12 @@
-use config::{self, ConfigBuilder, builder::BuilderState};
+use config::{self, builder::BuilderState, ConfigBuilder};
 use secrecy::{ExposeSecret, Secret};
 //use serde::de::value::Error;
 use serde_aux::field_attributes::deserialize_number_from_string;
-use sqlx::{postgres::{PgConnectOptions, PgSslMode}, ConnectOptions};
+use sqlx::{
+    postgres::{PgConnectOptions, PgSslMode},
+    ConnectOptions,
+};
 //use std::convert::{TryFrom, TryInto};
-
 
 #[derive(serde::Deserialize)]
 pub struct Settings {
@@ -71,11 +73,11 @@ pub fn get_configuration() -> Result<Settings, config::ConfigError> {
         .unwrap_or_else(|_| "local".into())
         .try_into()
         .expect("Failed to parse APP_ENVIRONMENT.");
-    
+
     let environment_filename = format!("{}.yaml", environment.as_str());
     let settings = config::Config::builder()
         .add_source(config::File::from(
-            configuration_directory.join("base.yaml")
+            configuration_directory.join("base.yaml"),
         ))
         .add_source(config::File::from(
             configuration_directory.join(environment_filename),
@@ -86,7 +88,8 @@ pub fn get_configuration() -> Result<Settings, config::ConfigError> {
             config::Environment::with_prefix("APP")
                 .prefix_separator("_")
                 .separator("__"),
-        ).build()?;
+        )
+        .build()?;
 
     settings.try_deserialize::<Settings>()
 }
@@ -103,7 +106,6 @@ impl Environment {
             Environment::Production => "production",
         }
     }
-
 }
 
 impl TryFrom<String> for Environment {
@@ -112,7 +114,10 @@ impl TryFrom<String> for Environment {
         match s.to_lowercase().as_str() {
             "local" => Ok(Self::Local),
             "production" => Ok(Self::Production),
-            other => Err(format!("{} is not a supported environment. Use either 'local' or 'production'.", other))
+            other => Err(format!(
+                "{} is not a supported environment. Use either 'local' or 'production'.",
+                other
+            )),
         }
     }
 }

@@ -3,7 +3,7 @@ use std::net::TcpListener;
 //use env_logger::Env;
 use actix_web;
 use secrecy::ExposeSecret;
-use sqlx::{PgPool, postgres::PgPoolOptions};
+use sqlx::{postgres::PgPoolOptions, PgPool};
 use zero2prod::{configuration, startup, telemetry};
 
 #[actix_web::main]

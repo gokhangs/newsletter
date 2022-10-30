@@ -3,7 +3,8 @@ use actix_web::{
     dev::Server,
     //middleware::Logger,
     web::{self},
-    App, HttpServer,
+    App,
+    HttpServer,
 };
 use sqlx::PgPool;
 use std::net::TcpListener;
