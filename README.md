@@ -1,1 +1,1 @@
-# zero2prod
+Newsletter app following zero 2 prod Rustbook
